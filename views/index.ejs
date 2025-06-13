@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>My To-Do List</h1>
+
+        <!-- Form to Add a New To-Do -->
+        <form action="/add" method="POST" class="add-form">
+            <input type="text" name="task" placeholder="Add a new task..." required autocomplete="off">
+            <button type="submit">Add Task</button>
+        </form>
+
+        <!-- List of To-Dos -->
+        <ul class="todo-list">
+            <% if (todos.length === 0) { %>
+                <li class="empty-message">You have no tasks! Great job!</li>
+            <% } else { %>
+                <!-- Loop through each to-do item passed from the server -->
+                <% todos.forEach(todo => { %>
+                    <li class="todo-item">
+                        <span><%= todo.task %></span>
+                        <!-- Form for deleting an item. We use a form to send a POST request. -->
+                        <form action="/delete/<%= todo.id %>" method="POST" class="delete-form">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </li>
+                <% }); %>
+            <% } %>
+        </ul>
+    </div>
+</body>
+</html>
